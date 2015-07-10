@@ -48,8 +48,9 @@ Installation
 0. Create and AWS Bucket to host your status page.  Say, status.example.com
 1. Download the dist package or build yourself using:
     1. > npm install
-    2. > gulp dist
-    3. (that's it)
+    2. > jspm install
+    3. > gulp dist
+    4. (that's it)
 2. Using your favorite method, upload the dist folder to your AWS bucket.
     1. I like to use the [AWS CLI](http://aws.amazon.com/cli/), and a pre-made script is available in ./publish.sh
     2. Configure the bucket to host a static website.  A sample policy is below for convenience.  Update your DNS to point to your bucket.
