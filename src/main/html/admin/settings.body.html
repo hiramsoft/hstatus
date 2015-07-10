@@ -1,0 +1,214 @@
+<!-- Settings -->
+
+<div class="row">
+
+    <div ng-show="showFirstTime">
+        <div class="success alert-box">
+            <h3 class="text-center">
+                Perhaps this is your first time here? If so, welcome!
+            </h3>
+            <p>
+                On this page you may configure how your hStatus page appears to your customers.
+                You will keep seeing this message until you do save these settings.
+            </p>
+            <p>
+                At the bottom, consider adding your Hiram Pages link so you can log in directly from the admin.html
+                and return using the "Public Site <i class="fa fa-external-link"></i>" above.
+            </p>
+            <p>
+                <strong>Questions or Issues?</strong>
+                <a href="https://www.github.com/hiramsoft/hstatus" class="shameless-banner-link">
+                    https://www.github.com/hiramsoft/hstatus
+                </a>
+            </p>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+
+    <form class="columns small-12" ng-cloak ng-submit="saveSettings()">
+        <div class="row">
+            <div class="columns small-12">
+                <h4>Settings</h4>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="columns small-12">
+                <label>Name
+                    <input type="text" class="form-control" ng-model="settings.name" placeholder="Hiram Pages Status"/>
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="columns small-12">
+                <label>Homepage
+                    <input type="text" class="form-control" ng-model="settings.homepage" placeholder="http://www.hirampages.com"/>
+                </label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="columns small-12">
+                <h4>Contact Information (Optional)</h4>
+                <p>Decorate your status page with links for your users to get in touch with you.</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="columns small-12">
+                <label>
+                    Twitter
+                    <div class="row collapse">
+                        <div class="small-1 columns">
+                            <span class="prefix">
+                                @
+                            </span>
+                        </div>
+                        <div class="small-11 columns">
+                            <input type="text" class="form-control" ng-model="settings.twitter"  placeholder="example_celeb"/>
+                        </div>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="columns small-12">
+                <label>
+                    Support Homepage
+                    <div class="row collapse">
+                        <div class="small-1 columns">
+                            <span class="prefix">
+                                <i class="fa fa-home"></i>
+                            </span>
+                        </div>
+                        <div class="small-11 columns">
+                            <input type="text" class="form-control" ng-model="settings.supportHomepage"  placeholder="http://support.example.com"/>
+                        </div>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="columns small-12">
+                <label>
+                    Support Email
+                    <div class="row collapse">
+                        <div class="small-1 columns">
+                            <span class="prefix">
+                                <i class="fa fa-envelope"></i>
+                            </span>
+                        </div>
+                        <div class="small-11 columns">
+                            <input type="text" class="form-control" ng-model="settings.supportEmail"  placeholder="support@example.com"/>
+                        </div>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="columns small-12">
+                <label>
+                    Support Phone
+                    <div class="row collapse">
+                        <div class="small-1 columns">
+                            <span class="prefix">
+                                <i class="fa fa-phone"></i>
+                            </span>
+                        </div>
+                        <div class="small-11 columns">
+                            <input type="text" class="form-control" ng-model="settings.supportPhone"  placeholder="206-555-1234"/>
+                        </div>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <div class="row top-spacer">
+            <div class="small-12 columns">
+                <button type="submit" class="button">
+                    Save
+                    <i class="fa fa-refresh fa-spin" ng-show="isSaving"></i>
+                    <i class="fa fa-check" ng-show="isSaved"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <form class="columns small-12" ng-cloak ng-submit="saveAdminSettings()">
+        <div class="row">
+            <div class="columns small-12">
+                <h4>Admin Settings</h4>
+                <p>These settings change how the Admin interface behaves.  Be warned that the settings are accessible on the internet, so be mindful about setting their values.</p>
+                <p>
+                    We typically limit access to specific Google users, so we put in the Hiram Pages Login Link below so the admin.html page works.
+                </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="columns small-12">
+                <label>
+                    Hiram Pages Login Link
+                    <div class="row collapse">
+                        <div class="small-1 columns">
+                            <span class="prefix">
+                                <i class="fa fa-user-secret"></i>
+                            </span>
+                        </div>
+                        <div class="small-11 columns">
+                            <input type="text" class="form-control" ng-model="loginLink"  placeholder="https://i.hirampages.com/..."/>
+                        </div>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="columns small-12">
+                <label>
+                    Public Site URL
+                    <div class="row collapse">
+                        <div class="small-1 columns">
+                            <span class="prefix">
+                                <i class="fa fa-link"></i>
+                            </span>
+                        </div>
+                        <div class="small-11 columns">
+                            <input type="text" class="form-control" ng-model="publicSiteUrl"  placeholder="https://status.example.com/..."/>
+                        </div>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+        <div class="row top-spacer">
+            <div class="small-12 columns">
+                <button type="submit" class="button">
+                    Save Admin Settings
+                    <i class="fa fa-refresh fa-spin" ng-show="isAdminSaving"></i>
+                    <i class="fa fa-check" ng-show="isAdminSaved"></i>
+                </button>
+            </div>
+        </div>
+    </form>
+
+</div>
+
+<div class="row top-spacer" style="margin-top:5em">
+    <div class="columns small-12">
+        <div class="panel">
+                <h2>Danger!</h2>
+                <p>
+                    This may be hard to undo.
+                </p>
+                <button type="button" class="button small alert" ng-click="resetEverything()">Reset everything.</button>
+        </div>
+    </div>
+</div>
+
+<!-- End Settings -->

@@ -1,0 +1,277 @@
+    <div class="row">
+        <div class="columns small-9">
+            <h2>Published Incidents</h2>
+        </div>
+        <div class="columns small-3">
+        </div>
+    </div>
+
+    <form ng-cloak ng-submit="prependIncident()">
+        <div class="row">
+            <div class="small-12 columns text-right">
+                <button type="submit" class="button large">
+                    <i class="fa fa-plus"></i>
+                    New Event
+                </button>
+            </div>
+        </div>
+    </form>
+
+    <!-- Upcoming events -->
+    <div ng-show="afterNoDayGroup.length > 0">
+        <div class="row">
+            <div class="small-12 columns">
+                <h4>Upcoming</h4>
+            </div>
+        </div>
+
+        <div ng-repeat="incident in afterNoDayGroup" class="row" style="padding-bottom:1em;padding-top:1em">
+
+            <div ng-hide="incident.edit">
+                <div class="small-12 columns">
+                        <span class="right">
+                            <button type="button" ng-click="incident.edit = true" class="button small"><i class="fa fa-edit"></i> Edit</button>
+                        </span>
+                    <blockquote ng-class="{'incident-unknown': incident.statusColor == 'unknown', 'incident-danger' : incident.statusColor == 'error', 'incident-warning':incident.statusColor=='warning', 'incident-success' : incident.statusColor == 'ok'}">
+
+                        <span ng-bind-html="incident.message | markdown">
+
+                                </span>
+
+                        <footer><cite>{{incident.startDt | fromNow}} at {{incident.startDt | hoursOnly}}</cite></footer>
+                    </blockquote>
+                </div>
+            </div>
+
+            <div ng-show="incident.edit" class="row">
+
+                <div class="small-12 columns">
+                    <form class="panel callout" ng-submit="saveOneIncident(incident)">
+                        <label>
+                            Message
+                            <div class="row collapse">
+                                <div class="small-10 columns">
+                                    <input type="text" class="form-control" ng-model="incident.message" placeholder="Four minutes ago we noticed connectivity issues with the eastern region...">
+                                </div>
+                                <div class="small-2 columns">
+                                    <button type="submit" class="button postfix"><i class="fa fa-save"></i> Save</button>
+                                </div>
+                            </div>
+                        </label>
+
+                        <div class="row">
+                            <div class="large-6 small-12 columns">
+                                <label>
+                                    Status Color
+                                    <ul class="button-group round even-4">
+                                        <button type="button" class="button small" ng-click="incident.statusColor='unknown'" ng-class="{'info':incident.statusColor=='unknown', 'secondary':incident.statusColor!='unknown'}">Info</button>
+                                        <button type="button" class="button small" ng-click="incident.statusColor='ok'" ng-class="{'success':incident.statusColor=='ok', 'secondary':incident.statusColor!='ok'}">OK</button>
+                                        <button type="button" class="button small" ng-click="incident.statusColor='warning'" ng-class="{'warning':incident.statusColor=='warning','secondary':incident.statusColor!='warning'}">Warning</button>
+                                        <button type="button" class="button small" ng-click="incident.statusColor='error'" ng-class="{'alert':incident.statusColor=='error','secondary':incident.statusColor!='error'}">Error</button>
+                                    </ul>
+                                </label>
+                            </div>
+                            <div class="large-3 small-6 columns">
+                                <label>
+                                    Date
+                                    <input type="date" ng-model="incident.date">
+                                </label>
+                            </div>
+                            <div class="large-3 small-6 columns">
+                                <label>
+                                    Time
+                                    <input type="time" ng-model="incident.time" step="60">
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="small-6 small-push-6 large-2 large-push-10 columns">
+                                <button type="button" class="button secondary tiny" ng-click="deleteIncident(incident)"><i class="fa fa-trash"></i> Delete</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <!-- End Upcoming events -->
+
+
+    <!-- Current events -->
+    <div ng-repeat="day in dayGroups">
+        <div class="row">
+            <div class="small-12 columns">
+                <h4>{{day.dt | daysOnly}}</h4>
+            </div>
+        </div>
+
+        <div ng-repeat="incident in day.incidents" class="row" style="padding-bottom:1em;padding-top:1em">
+
+            <div ng-hide="incident.edit">
+                <div class="small-12 columns">
+                    <span class="right">
+                        <button type="button" ng-click="incident.edit = true" class="button small"><i class="fa fa-edit"></i> Edit</button>
+                    </span>
+                    <blockquote ng-class="{'incident-unknown': incident.statusColor == 'unknown', 'incident-danger' : incident.statusColor == 'error', 'incident-warning':incident.statusColor=='warning', 'incident-success' : incident.statusColor == 'ok'}">
+
+                        <span ng-bind-html="incident.message | markdown">
+
+                                </span>
+
+                        <footer><cite>{{incident.startDt | fromNow}} at {{incident.startDt | hoursOnly}}</cite></footer>
+                    </blockquote>
+                </div>
+            </div>
+
+            <div ng-show="incident.edit" class="row">
+
+                <div class="small-12 columns">
+                    <form class="panel callout" ng-submit="saveOneIncident(incident)">
+                        <label>
+                            Message
+                            <div class="row collapse">
+                                <div class="small-10 columns">
+                                    <input type="text" class="form-control" ng-model="incident.message" placeholder="Four minutes ago we noticed connectivity issues with the eastern region...">
+                                </div>
+                                <div class="small-2 columns">
+                                    <button type="submit" class="button postfix"><i class="fa fa-save"></i> Save</button>
+                                </div>
+                            </div>
+                        </label>
+
+                        <div class="row">
+                            <div class="large-6 small-12 columns">
+                                <label>
+                                    Status Color
+                                    <ul class="button-group round even-4">
+                                        <button type="button" class="button small" ng-click="incident.statusColor='unknown'" ng-class="{'info':incident.statusColor=='unknown', 'secondary':incident.statusColor!='unknown'}">Info</button>
+                                        <button type="button" class="button small" ng-click="incident.statusColor='ok'" ng-class="{'success':incident.statusColor=='ok', 'secondary':incident.statusColor!='ok'}">OK</button>
+                                        <button type="button" class="button small" ng-click="incident.statusColor='warning'" ng-class="{'warning':incident.statusColor=='warning','secondary':incident.statusColor!='warning'}">Warning</button>
+                                        <button type="button" class="button small" ng-click="incident.statusColor='error'" ng-class="{'alert':incident.statusColor=='error','secondary':incident.statusColor!='error'}">Error</button>
+                                    </ul>
+                                </label>
+                            </div>
+                            <div class="large-3 small-6 columns">
+                                <label>
+                                    Date
+                                    <input type="date" ng-model="incident.date">
+                                </label>
+                            </div>
+                            <div class="large-3 small-6 columns">
+                                <label>
+                                    Time
+                                    <input type="time" ng-model="incident.time" step="60">
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="small-6 small-push-6 large-2 large-push-10 columns">
+                                <button type="button" class="button secondary tiny" ng-click="deleteIncident(incident)"><i class="fa fa-trash"></i> Delete</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+        <div ng-show="day.incidents.length == 0" class="row">
+            <div class="small-12 columns">
+                <h4><small>No reported incidents</small></h4>
+            </div>
+        </div>
+    </div>
+
+    <!-- End current events -->
+
+    <!-- Earlier events -->
+    <div>
+        <div class="row">
+            <div class="small-12 columns">
+                <h4>Upcoming</h4>
+            </div>
+        </div>
+
+        <div ng-repeat="incident in beforeNoDayGroup" class="row" style="padding-bottom:1em;padding-top:1em">
+
+            <div ng-hide="incident.edit">
+                <div class="small-12 columns">
+                        <span class="right">
+                            <button type="button" ng-click="incident.edit = true" class="button small"><i class="fa fa-edit"></i> Edit</button>
+                        </span>
+                    <blockquote ng-class="{'incident-unknown': incident.statusColor == 'unknown', 'incident-danger' : incident.statusColor == 'error', 'incident-warning':incident.statusColor=='warning', 'incident-success' : incident.statusColor == 'ok'}">
+
+                        <span ng-bind-html="incident.message | markdown">
+
+                                </span>
+
+                        <footer><cite>{{incident.startDt | fromNow}} at {{incident.startDt | hoursOnly}}</cite></footer>
+                    </blockquote>
+                </div>
+            </div>
+
+            <div ng-show="incident.edit" class="row">
+
+                <div class="small-12 columns">
+                    <form class="panel callout" ng-submit="saveOneIncident(incident)">
+                        <label>
+                            Message
+                            <div class="row collapse">
+                                <div class="small-10 columns">
+                                    <input type="text" class="form-control" ng-model="incident.message" placeholder="Four minutes ago we noticed connectivity issues with the eastern region...">
+                                </div>
+                                <div class="small-2 columns">
+                                    <button type="submit" class="button postfix"><i class="fa fa-save"></i> Save</button>
+                                </div>
+                            </div>
+                        </label>
+
+                        <div class="row">
+                            <div class="large-6 small-12 columns">
+                                <label>
+                                    Status Color
+                                    <ul class="button-group round even-4">
+                                        <button type="button" class="button small" ng-click="incident.statusColor='unknown'" ng-class="{'info':incident.statusColor=='unknown', 'secondary':incident.statusColor!='unknown'}">Info</button>
+                                        <button type="button" class="button small" ng-click="incident.statusColor='ok'" ng-class="{'success':incident.statusColor=='ok', 'secondary':incident.statusColor!='ok'}">OK</button>
+                                        <button type="button" class="button small" ng-click="incident.statusColor='warning'" ng-class="{'warning':incident.statusColor=='warning','secondary':incident.statusColor!='warning'}">Warning</button>
+                                        <button type="button" class="button small" ng-click="incident.statusColor='error'" ng-class="{'alert':incident.statusColor=='error','secondary':incident.statusColor!='error'}">Error</button>
+                                    </ul>
+                                </label>
+                            </div>
+                            <div class="large-3 small-6 columns">
+                                <label>
+                                    Date
+                                    <input type="date" ng-model="incident.date">
+                                </label>
+                            </div>
+                            <div class="large-3 small-6 columns">
+                                <label>
+                                    Time
+                                    <input type="time" ng-model="incident.time" step="60">
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="small-6 small-push-6 large-2 large-push-10 columns">
+                                <button type="button" class="button secondary tiny" ng-click="deleteIncident(incident)"><i class="fa fa-trash"></i> Delete</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+
+        <div ng-show="beforeNoDayGroup.length == 0" class="row">
+            <div class="small-12 columns">
+                <h4><small>No reported incidents</small></h4>
+            </div>
+        </div>
+    </div>
+
+    <!-- Upcoming events -->

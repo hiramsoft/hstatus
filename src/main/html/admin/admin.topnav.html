@@ -1,0 +1,23 @@
+<div class="icon-bar three-up">
+    <a class="item" ui-sref="authed.incidents" ui-sref-active="active">
+        <i class="fa fa-list"></i>
+        <label>hStatus Admin</label>
+    </a>
+    <a class="item" ui-sref="authed.settings" ui-sref-active="active">
+        <i class="fa fa-gears"></i>
+        <label>Settings</label>
+    </a>
+    <a class="item" ng-href="{{publicSiteUrl}}" ui-sref-active="active" ng-class="{'disabled' : !publicSiteUrl}">
+        <i class="fa fa-external-link"></i>
+        <label>Public Site</label>
+    </a>
+</div>
+
+<div class="row">
+    <div ng-repeat="notification in notifications" class="alert-box" ng-class="{'success' : notification.level == 'success', 'info' : notification.level == 'info', 'info' : notification.level == 'error'}" ng-animate=" 'animate' " role="alert">
+        <i class="fa fa-exclamation-triangle"></i>
+        {{notification.message}}
+        <a ui-sref="admin.login" ng-show="showLogin">Login again</a>
+        <button type="button" class="close" ng-click="remove(notification)" onclick="return false;">&times;</button>
+    </div>
+</div>

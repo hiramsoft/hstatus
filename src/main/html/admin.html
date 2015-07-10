@@ -1,0 +1,38 @@
+{%  extends './_layout/default.html' %}
+
+{% block title %}
+hStatus: Your own reliable, open source status page
+{% endblock %}
+
+{% block header %}
+<script src="aws-sdk-s3.min.js"></script>
+<script src="%{{ jsadmin }}%"></script>
+<link rel="stylesheet" href="%{{ cssall }}%">
+
+{% endblock %}
+
+
+{% block content %}
+<!-- Begin Header -->
+<header class="container" ui-view="topnav">
+    <!-- Headers delivered by the abstract parents -->
+</header>
+<!-- End Header -->
+
+<!-- Begin Main Content -->
+<div class="row top-spacer">
+    <div class="columns small-12" ui-view="content">
+        <!-- Content delivered by the partials -->
+    </div>
+</div>
+<!-- End Main Content -->
+
+<!-- Incidents -->
+{% endblock %}
+
+{% block footer %}
+Admin App Rev
+<a href="https://www.github.com/hiramsoft/hstatus">
+%{{gitRevShort}}%
+</a>
+{% endblock %}

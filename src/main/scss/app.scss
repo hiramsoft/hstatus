@@ -1,0 +1,35 @@
+@import "foundation-5.5.2/foundation";
+
+.top-spacer{
+  margin-top:3em;
+}
+
+.login-button {
+  margin-top:3em;
+  margin-bottom:3em;
+}
+
+.shameless-banner-link{
+  color:white;
+}
+
+.shameless-banner-link:hover{
+  color:black;
+}
+
+.incident-unknown {
+  border-left-color: darken($info-color, 15%);
+  border-left-width: 0.5em;
+}
+.incident-danger {
+  border-left-color: darken($alert-color, 15%);
+  border-left-width: 0.5em;
+}
+.incident-warning {
+  border-left-color: darken($warning-color, 15%);
+  border-left-width: 0.5em;
+}
+.incident-success {
+  border-left-color: darken($success-color, 15%);
+  border-left-width: 0.5em;
+}

@@ -1,0 +1,21 @@
+<div class="clearfix">
+
+</div>
+
+<div class="row" style="margin-top:25vh;">
+    <div class="small-12 columns medium-6 medium-push-3">
+        <div class="panel text-center" ng-cloak>
+            <h5>Administration Area</h5>
+
+            <span ng-show="canShowLogin">
+                <a ng-href="{{loginUrl}}" class="button radius login-button">Login with Hiram Pages</a>
+                <p>
+                    <small>Learn more about <a href="https://www.hirampages.com">Hiram Pages</a></small>
+                </p>
+            </span>
+            <span ng-show="needsWizard">
+                Create a login link at <a href="https://www.hirampages.com">Hiram Pages</a> and then configure the admin settings to be able to login from this page.
+            </span>
+        </div>
+    </div>
+</div>

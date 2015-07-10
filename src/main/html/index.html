@@ -1,0 +1,191 @@
+{%  extends './_layout/default.html' %}
+
+{% block title %}
+
+{% endblock %}
+
+{% block header %}
+<script src="%{{ jsviewer }}%"></script>
+<link rel="stylesheet" href="%{{ cssall }}%">
+{% endblock %}
+
+{% block content %}
+<div class="container" ng-controller="IncidentController" ng-cloak>
+    <!-- Nav Bar -->
+    <div class="row">
+        <div class="small-12 columns">
+            <h1>
+                <a rel="nofollow" ng-href="{{desc.homepage}}">{{desc.name}}</a>
+            </h1>
+            <div class="right">
+                <dl class="sub-nav">
+                    <dd ng-show="desc.twitter">
+                        <a rel="nofollow" ng-href="http://www.twitter.com/{{desc.twitter}}">
+                            <i class="fa fa-twitter"></i>
+                            @{{desc.twitter}}
+                        </a>
+                    </dd>
+                    <dd ng-show="desc.homepage">
+                        <a rel="nofollow" ng-href="{{desc.homepage}}">
+                            <i class="fa fa-home"></i>
+                            Homepage
+                        </a>
+                    </dd>
+
+                    <dd ng-show="desc.supportEmail">
+                        <a rel="nofollow" ng-href="mailto:{{desc.supportEmail}}">
+                            <i class="fa fa-envelope"></i>
+                            Support
+                        </a>
+                    </dd>
+
+                    <dd ng-show="desc.supportPhone">
+                        <a rel="nofollow" ng-href="tel:{{desc.supportPhone}}">
+                            <i class="fa fa-phone"></i>
+                            {{desc.supportPhone}}
+                        </a>
+                    </dd>
+                </dl>
+            </div>
+            <hr/>
+        </div>
+    </div>
+
+
+    <!-- End Nav -->
+
+
+    <!-- Main Page Content and Sidebar -->
+
+    <div class="row">
+
+        <!-- Main Blog Content -->
+        <div class="small-12 columns" role="content">
+
+            <article>
+
+                <div class="row" style="padding-bottom:1em">
+                    <div class="small-12 columns">
+                        &nbsp;
+                        <div class="pull-right" ng-show="hStatus.asOfDt">As of {{hStatus.asOfDt | calendar}} ({{lastUpdated}}) <a href="#/current" ng-click="refreshList()" class="secondary"><i class="fa fa-refresh" ng-class="{'fa-spin':isRefreshing}"> </i></a></div>
+                        <div class="pull-right" ng-hide="hStatus.asOfDt">Loading...</div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="small-12 columns" ng-show="desc.is404">
+                        <div class="alert-box success hide">
+                            <a href="https://www.hstatus.com" class="shameless-banner-link">
+                                <i class="fa fa-check"></i> This could be your own inexpensive, reliable, professional, and <em>open source</em> status page from hStatus.
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-show="afterNoDayGroup.length > 0">
+                    <div class="row">
+                        <div class="small-12 columns">
+                            <h4>Upcoming</h4>
+                        </div>
+                    </div>
+
+                    <div ng-repeat="incident in afterNoDayGroup" class="row" style="padding-bottom:1em;padding-top:1em">
+                        <div class="small-12 columns">
+                            <blockquote ng-class="{'incident-unknown': incident.statusColor == 'unknown', 'incident-danger' : incident.statusColor == 'error', 'incident-warning':incident.statusColor=='warning', 'incident-success' : incident.statusColor == 'ok'}">
+
+                                <span ng-bind-html="incident.message | markdown">
+
+                                </span>
+
+                                <footer><cite>{{incident.startDt | fromNow}} at {{incident.startDt | hoursOnly}}</cite></footer>
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+
+                <div ng-repeat="day in dayGroups">
+                    <div class="row">
+                        <div class="small-12 columns">
+                            <h4>{{day.dt | daysOnly}}</h4>
+                        </div>
+                    </div>
+
+                    <div ng-repeat="incident in day.incidents" class="row" style="padding-bottom:1em;padding-top:1em">
+                        <div class="small-12 columns">
+                            <blockquote ng-class="{'incident-unknown': incident.statusColor == 'unknown', 'incident-danger' : incident.statusColor == 'error', 'incident-warning':incident.statusColor=='warning', 'incident-success' : incident.statusColor == 'ok'}">
+
+                                <span ng-bind-html="incident.message | markdown">
+
+                                </span>
+
+                            <footer><cite>{{incident.startDt | fromNow}} at {{incident.startDt | hoursOnly}}</cite></footer>
+                            </blockquote>
+                        </div>
+                    </div>
+
+                    <div ng-show="day.incidents.length == 0" class="row">
+                        <div class="small-12 columns">
+                            <h4><small>No reported incidents</small></h4>
+                        </div>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="row">
+                        <div class="small-12 columns">
+                            <h4>Earlier</h4>
+                        </div>
+                    </div>
+
+                    <div ng-repeat="incident in beforeNoDayGroup" class="row" style="padding-bottom:1em;padding-top:1em">
+                        <div class="small-12 columns">
+                            <blockquote ng-class="{'incident-unknown': incident.statusColor == 'unknown', 'incident-danger' : incident.statusColor == 'error', 'incident-warning':incident.statusColor=='warning', 'incident-success' : incident.statusColor == 'ok'}">
+
+                                <span ng-bind-html="incident.message | markdown">
+
+                                </span>
+
+                                <footer><cite>{{incident.startDt | fromNow}} at {{incident.startDt | hoursOnly}}</cite></footer>
+                            </blockquote>
+                        </div>
+                    </div>
+
+                    <div ng-show="beforeNoDayGroup.length == 0" class="row">
+                        <div class="small-12 columns">
+                            <h4><small>No reported incidents</small></h4>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </article>
+
+        </div>
+
+        <!-- End Main Content -->
+
+
+    </div>
+
+    <!-- End Main Content and Sidebar -->
+</div>
+{% endblock %}
+
+{% block footer %}
+    <a href="admin.html">Admin</a>
+
+    <!--
+    Want your own inexpensive status page?  Check us out at http://www.hStatus.com.
+
+    This page is running
+    ========================================================================
+    %{{gitRevShort}}%
+    ========================================================================
+    Help us bring affordable status pages to everyone.
+
+    http://www.github.com/hiramsoft/hstatus
+    -->
+{% endblock %}

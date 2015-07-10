@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% block header %}{% endblock %}
+</head>
+<body>
+
+    {% block content %}{% endblock %}
+
+<!-- Footer -->
+
+<footer class="row">
+    <div class="small-12 columns" style="margin-bottom:2em;">
+        <div class="text-center">
+            <h4>
+                <small>
+                    <em>Powered by <a href="https://www.hStatus.com">hStatus</a>
+                        |
+                        {% block footer %}{% endblock %}
+                    </em>
+                </small>
+            </h4>
+        </div>
+    </div>
+</footer>
+</body>
+</html>
+
