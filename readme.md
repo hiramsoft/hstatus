@@ -6,6 +6,7 @@ It requires no servers to operate, and when combined with your favorite CDN, you
 available status site for minimal cost.
 
 Together with [Hiram Pages](https://www.hirampages.com), you may update incidents using only a web browser.
+Without Hiram Pages, editing incidents is as easy as editing JSON files.
 
 Demo
 -----
@@ -39,24 +40,24 @@ Requirements
 -------
 
 1. AWS S3 Bucket configured to host a static website (see below for sample bucket policy)
-    1. There are many good references available via your favorite search engine with specific instructions
+    1. There are many good references available via your favorite search engine with specific instructions on how to use AWS S3 to host static websites.
 2. If you would like to administer hStatus from the internet, you will need [Hiram Pages](https://www.hirampages.com)
 
 Installation
 -------
 
-0. Create and AWS Bucket to host your status page.  Say, status.example.com
-1. Download the dist package or build yourself using:
+0. Create an AWS Bucket to host your status page.  Say, status.example.com
+1. Download the dist package from releases or build yourself using:
     1. > npm install
     2. > jspm install
     3. > gulp dist
     4. (that's it)
 2. Using your favorite method, upload the dist folder to your AWS bucket.
-    1. I like to use the [AWS CLI](http://aws.amazon.com/cli/), and a pre-made script is available in ./publish.sh
+    1. I like to use the [AWS CLI](http://aws.amazon.com/cli/), and a sample script is available in ./publish.sh
     2. Configure the bucket to host a static website.  A sample policy is below for convenience.  Update your DNS to point to your bucket.
-3. Then go to [Hiram Pages](https://www.hirampages.com), and configure Hiram Pages for your AWS Bucket.
-4. Create an hStatus link, and click the link.
-5. You now can manage your incidents.
+3. Then add incidents.
+    1. Easy method: go to [Hiram Pages](https://www.hirampages.com), configure Hiram Pages for your AWS Bucket, and create an hStatus link.
+    2. Edit the current.json file manually to add in incidents.  You may have to create it.
 
 All of your data is hosted on your AWS Bucket.
 You have complete control of your status page.
@@ -82,7 +83,7 @@ This project is based on the [ES6 AngularJS Starter](https://www.github.com/hira
 6. gulp dist
     1. Minifies the JavaScript
 
-Note: CORS will be an issue, most like, while doing development from localhost.
+Note: CORS will be an issue during the development because of how AWS S3 responds with CORS responses between http://localhost and https://aws...
 If this blocks you, you can disable CORS in Chrome:
 
     open /Applications/Google\ Chrome.app/ --args --disable-web-security
@@ -133,7 +134,7 @@ Todos
     * I think it's possible, and if so, this would enable you to have pretty real-time pictures
     * Would also enable calculating an SLA automatically
 * Archiving old incidents
-    * This is a feature that people say they want, but I've never
+    * This is a feature that people say they want, but I've never seen in practice this be a deal breaker.
 * Mobile layout tweaks
-    * I picked default a Zurb Foundation layout, and it isn't quite right on my iPhone.
+    * I picked default a Zurb Foundation layout for the admin interface, and it isn't quite right on my iPhone.
       Nothing blocking, but it could be better.
